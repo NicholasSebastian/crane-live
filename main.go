@@ -1,14 +1,16 @@
 package main
 
-import "fmt"
-import "os/exec"
+import (
+	"fmt"
+	"os/exec"
+)
 
 // TODO: Handle multiple camera inputs.
 // TODO: Concurrently process the incoming video streams if necessary.
 
 var DEVICE_TYPE = "avfoundation" // NOTE: This should be "dshow" on windows, "v4l2" on linux.
-var PRESET = "ultrafast" // Fastest processing time, but probably worst compression.
-var FORMAT = "h265"      // NOTE: If this doesn't work, either install the lib it needs or change to h264.
+var PRESET = "ultrafast"         // Fastest processing time, but probably worst compression.
+var FORMAT = "h265"              // NOTE: If this doesn't work, either install the lib it needs or change to h264.
 
 func main() {
 	input_device := "0" // TODO: This should be based on which room the client is entering into.
@@ -28,13 +30,13 @@ func main() {
 		"-s", resolution,
 	)
 
-	stdout, error := response.Output()
+	stdout, error := response.StdoutPipe()
 	if error != nil {
 		fmt.Printf("ERROR: %s\n", error) // TODO: Fix this from erroring status 251.
 		return
 	}
 
-	fmt.Println(stdout)
+	fmt.Println(stdout) // TODO: Process and send this stream.
 
 	// TODO: Implement an HTTP server to handle the WebRTC handshake.
 	// It should also expect to receive the connection quality to adjust for the right quality.
