@@ -14,8 +14,8 @@ type FfmpegConfig struct {
 	resolution   string
 }
 
-var PRESET = "ultrafast" // Fastest processing time, but probably worst compression.
-var FORMAT = "h265"      // Just use 'h264' if this doesn't work.
+const PRESET = "ultrafast" // Fastest processing time, but probably worst compression.
+const FORMAT = "h265"      // Just use 'h264' if this doesn't work.
 
 var DEVICE_TYPES = map[string]string{
 	"windows": "dshow",
